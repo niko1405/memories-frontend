@@ -5,9 +5,8 @@ self.addEventListener('push', e => {
         body: data.message,
         icon: data.icon === 'default' ? '/appLogo.png' : data.icon,
         data: {
-            url: 'http://localhost:3000/sui'
+            url: 'https://memories-project-v1-0.netlify.app/'
         },
-        // click_action: "http://localhost:3000/sui",
     });
 });
 
