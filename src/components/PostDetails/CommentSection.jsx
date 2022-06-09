@@ -59,7 +59,7 @@ const CommentSection = ({ post }) => {
 
         commentsRef.current.scrollIntoView({ behavior: 'smooth' });
 
-        dispatch(commentPost(newComment, post._id, user.result._id));
+        dispatch(commentPost(newComment, post._id, user.result._id, t));
     }
 
     const goToUser = async (userName) => {

@@ -36,7 +36,7 @@ export const updateOwnProfile = (id, formData, setLoading, setEditProfile) => as
     }).catch(_ => dispatch({ type: PROFILE_ERROR }));
 }
 
-export const follow = (userToFollow, userWhoFollows, profileUser, currentUser, setLoading, type = undefined) => async (dispatch) => {
+export const follow = (userToFollow, userWhoFollows, profileUser, currentUser, setLoading, type = undefined, t) => async (dispatch) => {
     setLoading(true);
 
     await api.follow(userToFollow, userWhoFollows).then(({ data }) => {
@@ -54,7 +54,7 @@ export const follow = (userToFollow, userWhoFollows, profileUser, currentUser, s
 
         //send push notification to userToFollow when specific notifications enabled
         if (data.userToFollowNotifications.enable && data.userToFollowNotifications.following_followers)
-            sendPushNotification(userToFollow._id, `You have a new follower!`, `${userWhoFollows.userName} is following you now.`, userWhoFollows.imageUrl);
+            sendPushNotification(userToFollow._id, t('follower_notification_title'), t('follower_notification_message', { user: userWhoFollows.userName }), userWhoFollows.imageUrl);
 
         setLoading(false);
     }).catch(err => console.log(err));
@@ -187,12 +187,12 @@ export const getChat = (id, chatId) => async (dispatch) => {
     dispatch({ type: END_LOADING });
 }
 
-export const sendDirectMessage = (id, chatId, message) => async (dispatch) => {
+export const sendDirectMessage = (id, chatId, message, t) => async (dispatch) => {
     await api.sendDirectMessage(id, chatId, message).then(({ data }) => {
         dispatch({ type: SEND_DIRECT_MESSAGE, data: { messages: data.messages, chatProfile: data.chatProfile } });
 
          //send push notification to receiver when specific notifications enabled
          if (data.receiverSettings.notifications.enable && data.receiverSettings.notifications.directMessages)
-            sendPushNotification(chatId, `You have received a direct message from ${message[0]}!`, `Message: ${message[1]}`, data.chatProfile.imageUrl);
+            sendPushNotification(chatId, t('direct_message_notification_title', { user: message[0] }), `${t('message')}: ${message[1]}`, data.chatProfile.imageUrl);
     }).catch(err => console.log(err));
 }

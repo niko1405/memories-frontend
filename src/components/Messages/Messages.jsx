@@ -67,7 +67,7 @@ const Messages = () => {
 
         setMessages([...messages, newComment]);
 
-        dispatch(sendDirectMessage(user.result._id, chat.chatProfile._id, newComment));
+        dispatch(sendDirectMessage(user.result._id, chat.chatProfile._id, newComment, t));
 
         document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
     }

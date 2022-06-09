@@ -93,7 +93,7 @@ const Form = () => {
         if (post)
             dispatch(updatePost(postId, formData, setRemark, clear));
         else
-            dispatch(createPost(formData, setRemark, clear));
+            dispatch(createPost(formData, setRemark, clear, t));
     }
 
     const clear = () => {

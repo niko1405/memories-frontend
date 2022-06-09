@@ -91,7 +91,7 @@ const Profile = () => {
         if (!user) return;
 
         if (!following) {
-            dispatch(follow(profileUser, currentUser, profileUser, user, setLoading));
+            dispatch(follow(profileUser, currentUser, profileUser, user, setLoading, '', t));
         } else {
             dispatch(unfollow(profileUser, currentUser, profileUser, user, setLoading));
         }

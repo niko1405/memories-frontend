@@ -45,7 +45,7 @@ export const getPostsBySearch = (searchQuery, searchPosts = false, setLoading = 
     setLoading ? setLoading(false) : dispatch({ type: END_LOADING });
 }
 
-export const createPost = (formData, setRemark, clear) => async (dispatch) => {
+export const createPost = (formData, setRemark, clear, t) => async (dispatch) => {
     dispatch({ type: START_LOADING });
     setRemark({ type: 'loading', message: 'loading...' });
 
@@ -58,7 +58,7 @@ export const createPost = (formData, setRemark, clear) => async (dispatch) => {
         //send push notification to followers when specific notifications enabled
         data.followersSettings.forEach(followerSettings => {
             if (followerSettings.notifications.enable && followerSettings.notifications.posts_comments)
-                sendPushNotification(followerSettings._id, `Post has been shared`, `${data.post.name} has shared a new post, go check it out!`, data.profileImg || 'default')
+                sendPushNotification(followerSettings._id, t('post_notification_title'), t('post_notification_message', { user: data.post.name }), data.profileImg || 'default')
         });
     }).catch((err) => {
         setRemark({ type: 'error', message: err.response.data.message });
@@ -83,7 +83,7 @@ export const updatePost = (id, formData, setRemark, clear) => async (dispatch) =
     dispatch({ type: END_LOADING });
 }
 
-export const commentPost = (value, id, userId) => async (dispatch) => {
+export const commentPost = (value, id, userId, t) => async (dispatch) => {
     try {
         const { data } = await api.commentPost(value, id);
 
@@ -92,7 +92,7 @@ export const commentPost = (value, id, userId) => async (dispatch) => {
         if (userId !== data.updatedPost.creator) {
             //send push notification to post creator when specific notifications enabled
             if (data.creatorSettings.notifications.enable && data.creatorSettings.notifications.posts_comments)
-                sendPushNotification(data.creatorSettings._id, `${value.split(':')[0]} has comment on your post!`, `Message: ${value.split(':')[1]}`, data.creatorProfileImg);
+                sendPushNotification(data.creatorSettings._id, t('post_comment_notification_title', { user: value.split(':')[0] }), `${t('message')}: ${value.split(':')[1]}`, data.creatorProfileImg);
         }
     } catch (error) {
         console.log(error);

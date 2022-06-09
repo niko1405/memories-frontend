@@ -46,7 +46,7 @@ const UserList = ({ profileUser, theme, type, userList }) => {
         const isFollowing = currentUser.follows.includes(user._id)
 
         if (!isFollowing)
-            dispatch(follow(user, currentUser, profileUser, currUser, setLoading, type));
+            dispatch(follow(user, currentUser, profileUser, currUser, setLoading, type, t));
         else
             dispatch(unfollow(user, currentUser, profileUser, currUser, setLoading, type));
     }
