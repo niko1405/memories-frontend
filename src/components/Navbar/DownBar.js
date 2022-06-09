@@ -16,6 +16,7 @@ import ProfileIcon from "@mui/icons-material/Person";
 import { getUser } from '../../actions/auth';
 
 import useStyles from './styles';
+import { HANDLE_DOWNBAR_SHOW } from '../../constants/actionTypes';
 
 const locations = ['home', 'search', 'create', 'profile'];
 
@@ -47,6 +48,7 @@ const DownBar = () => {
     useEffect(() => {
         const pathName = location.pathname;
         setShow(true);
+        dispatch({ type: HANDLE_DOWNBAR_SHOW, data: true });
 
         if (locations.includes(pathName.split('/')[1])) {
             if (pathName.includes('profile') && (!user || !pathName.includes(currentUser?._id))) return;

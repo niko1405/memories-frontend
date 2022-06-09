@@ -67,7 +67,7 @@ const ChangePassword = ({ userId = undefined, onClose = undefined }) => {
                     <form className={classes.form} onSubmit={handleSubmit}>
                         {onClose ? (
                             <Container style={{ display: 'flex', alignItems: 'center' }} >
-                                <Tooltip title={t('back')} ><IconButton onClick={onClose} style={{ cursor: 'pointer' }} ><ArrowBack htmlColor={darkMode ? 'white' : 'gray'} /></IconButton></Tooltip>
+                                <Tooltip title={t('back')} ><IconButton onClick={onClose} style={{ cursor: 'pointer' }} ><ArrowBack /></IconButton></Tooltip>
                                 <Typography variant='h6' color='gray' ><b>{t('change_password')}</b></Typography>
                             </Container>
                         ) : (
