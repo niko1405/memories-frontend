@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
     top: {
         display: 'flex',
-        alignItems: 'left',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
     },
     topGrid: {
         display: 'flex',

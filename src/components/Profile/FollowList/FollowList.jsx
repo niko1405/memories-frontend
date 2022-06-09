@@ -49,7 +49,7 @@ const FollowList = ({ profileUser, currentUser, followList, setFollowList }) => 
             <Container component="main" maxWidth='xs'>
                 <Card className={classes.card} elevation={3} >
                     <Container className={classes.top} >
-                        <Tooltip title={t('back')} ><IconButton onClick={() => goBack()} style={{ cursor: 'pointer' }} ><ArrowBack htmlColor={darkMode ? 'white' : 'gray'} /></IconButton></Tooltip>
+                        <Tooltip title={t('back')} ><IconButton onClick={() => goBack()} style={{ cursor: 'pointer' }} ><ArrowBack /></IconButton></Tooltip>
                         <Typography variant='h5' color='primary' >{profileUser?.userName}</Typography>
                     </Container>
                     <Box sx={{ width: '100%', typography: 'body1', marginTop: theme.spacing(2) }}>
