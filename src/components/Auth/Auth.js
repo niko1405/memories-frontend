@@ -100,7 +100,7 @@ const Auth = () => {
 
     const googleFailure = (error) => {
         setError({ ...noErrors, broadcast: t('google_error') });
-        alert(error.details);
+        console.log(error.details);
     }
 
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);

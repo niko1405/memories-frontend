@@ -193,6 +193,6 @@ export const sendDirectMessage = (id, chatId, message) => async (dispatch) => {
 
          //send push notification to receiver when specific notifications enabled
          if (data.receiverSettings.notifications.enable && data.receiverSettings.notifications.directMessages)
-            sendPushNotification(chatId, `You have received a direct message from ${message.split(', ')[0]}!`, `Message: ${message.split(', ')[1]}`, data.chatProfile.imageUrl);
+            sendPushNotification(chatId, `You have received a direct message from ${message[0]}!`, `Message: ${message[1]}`, data.chatProfile.imageUrl);
     }).catch(err => console.log(err));
 }
