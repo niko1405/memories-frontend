@@ -1,0 +1,53 @@
+export const FETCH_ALL = 'FETCH_ALL';
+export const FETCH_ALL_POSTS = 'FETCH_ALL_POSTS';
+export const FETCH_POST = 'FETCH_POST';
+export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
+export const UPDATE = 'UPDATE';
+export const DELETE = 'DELETE';
+export const CREATE = 'CREATE';
+export const COMMENT = 'COMMENT';
+export const CLEAR_POSTS = 'CLEAR_POSTS';
+export const FETCH_SAVED_POSTS = 'FETCH_SAVED_POSTS';
+export const REMOVE_SAVED_POST = 'REMOVE_SAVED_POST';
+
+export const LOADING_MORE = 'LOADING_MORE';
+
+export const START_LOADING = 'START_LOADING';
+export const END_LOADING = 'END_LOADING';
+
+export const AUTH = 'AUTH'; 
+export const LOGOUT = 'LOGOUT'; 
+export const GET_USER = 'GET_USER';
+export const UPDATE_OWN_PROFILE = 'UPDATE_OWN_PROFILE';
+export const HANDLE_FOLLOWING = 'HANDLE_FOLLOWING';
+export const GET_PROFILE_USER = 'GET_PROFILE_USER';
+export const GET_USERS = 'GET_USERS';
+export const CLEAR_USERS = 'CLEAR_USERS';
+export const SEARCH_USERS = 'SEARCH_USERS';
+export const LOAD_CURRENT_USER = 'LOAD_CURRENT_USER';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const AUTH_LOADING = 'AUTH_LOADING';
+export const AUTH_UNLOADING = 'AUTH_UNLOADING';
+export const DELETE_USER = 'DELETE_USER';
+export const GET_PROFILES = 'GET_PROFILES';
+export const CLEAR_PROFILES = 'CLEAR_PROFILES';
+export const SEARCH_PROFILES = 'SEARCH_PROFILES';
+
+export const GET_SUGGESTED_PROFILES = 'GET_SUGGESTED_PROFILES';
+export const SEND_DIRECT_MESSAGE = 'SEND_DIRECT_MESSAGE';
+export const GET_CHAT = 'GET_CHAT';
+export const GET_RECENT_CHATS = 'GET_RECENT_CHATS';
+export const SEARCH_CHATS = 'SEARCH_CHATS';
+
+export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const POST_ERROR = 'POST_ERROR';
+
+export const HANDLE_SCROLLING = 'HANDLE_SCROLLING';
+export const HANDLE_DOWNBAR_SHOW = 'HANDLE_DOWNBAR_SHOW';
+
+export const UPDATE_LOCALSTORAGE = 'UPDATE_LOCALSTORAGE';
+
+export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
+export const CHANGE_THEME = 'CHANGE_THEME';
+export const UPDATE_NOTIFICATIONS = 'UPDATE_NOTIFICATIONS';
+export const UPDATE_PERS_INFO = 'UPDATE_PERS_INFO';
