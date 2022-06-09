@@ -33,6 +33,7 @@ export const forgotPassword = (email) => API.post(`/user/forgotPw`, { email });
 export const changePassword = (id, password) => API.post(`/user/changePw`, { id, password });
 export const deleteAccount = (id) => API.get(`/user/deleteAcc/${id}`);
 export const changeUsername = (id, userName) => API.post(`/user/changeUsername/${id}`, { userName });
+export const sendEmail = (email) => API.patch(`/user/sendEmail`, { email });
 
 export const changeTheme = (id, darkMode) => API.patch(`/settings/theme/${id}`, { darkMode });
 export const changeLanguage = (id, language) => API.patch(`/settings/language/${id}`, { language });

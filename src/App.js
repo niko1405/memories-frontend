@@ -24,6 +24,7 @@ import { getTheme, getLanguage } from './actions/settings';
 import SavedPosts from './components/SavedPosts/SavedPosts';
 import Messages from './components/Messages/Messages';
 import { useTranslation } from 'react-i18next';
+import SendEmail from './components/SendEmail/SendEmail';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -80,6 +81,7 @@ const App = () => {
                             <Route path="/savedPosts" exact element={user ? <SavedPosts /> : <Navigate to='/auth' />} />
                             <Route path="/messages" exact element={user ? <Messages /> : <Navigate to='/auth' />} />
                             <Route path="/messages/:id" exact element={user ? <Messages /> : <Navigate to='/auth' />} />
+                            <Route path="/sendEmail" exact element={!user ? <SendEmail /> : <Navigate to='/home' />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Routes>
                     </ScrollIntoView>

@@ -143,3 +143,15 @@ export const changeUsername = (id, userName, setRemark, storageUser) => async (d
 
     dispatch({ type: AUTH_UNLOADING });
 }
+
+export const sendEmail = (email, setRemark) => async (dispatch) => {
+    dispatch({ type: AUTH_LOADING });
+
+    await api.sendEmail(email).then(({ data }) => {
+        setRemark({ type: 'successfull', message: data.message });
+    }).catch(err => {
+        setRemark({ type: 'error', message: err.response.data.message });
+    });
+
+    dispatch({ type: AUTH_UNLOADING });
+}

@@ -123,13 +123,21 @@ const Auth = () => {
                 </Avatar>
                 <Typography variant="h5" ><b>{isSignUp ? t('sign_up') : t('sign_in')}</b></Typography>
                 {error.broadcast.length ? (
-                    <Typography variant='body1' color='secondary' style={{ marginTop: '3px' }} >{error.broadcast}</Typography>
+                    <>
+                        {error.broadcast.includes('{{here}}') ? (
+                            <Typography variant='body1' color='secondary' style={{ marginTop: '3px' }} >
+                                {error.broadcast.split('{{here}}')[0]}&nbsp;
+                                <Link style={{ cursor: 'pointer' }} onClick={() => navigate('/sendEmail')}>here</Link>.
+                            </Typography>
+                        ) : <Typography variant='body1' color='secondary' style={{ marginTop: '3px' }} >{error.broadcast}</Typography>
+                        }
+                    </>
                 ) : ''}
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {isSignUp && (
                             <>
-                                <CustomInput name="name" label="Name" cstyle={{ borderColor: '#3256b9'}} handleChange={handleChange} autoFocus half helperText={error.name} error={error.name.length ? true : false} />
+                                <CustomInput name="name" label="Name" cstyle={{ borderColor: '#3256b9' }} handleChange={handleChange} autoFocus half helperText={error.name} error={error.name.length ? true : false} />
                                 <CustomInput name="firstName" label={t('first_name')} handleChange={handleChange} half />
                                 <CustomInput name="userName" label={t('user_name')} handleChange={handleChange} error={error.userName.length ? true : false} helperText={error.userName} />
                             </>
@@ -172,14 +180,14 @@ const Auth = () => {
             </Paper>
             <Dialog open={emailVer} onClose={() => { }} TransitionComponent={Transition} >
                 <Container className={classes.emailVer} elevation={6} >
-                    <Typography variant='h4' color='darkgreen'><b>Email Verification</b></Typography>
+                    <Typography variant='h4' color='darkgreen'><b>{t('email_ver')}</b></Typography>
                     <Typography className={classes.emailVerContent} variant='h6' color='grey'>{t('email_ver_1')} <b>{formData.email}</b></Typography>
                     <Typography className={classes.emailVerContent} variant='h6' color='grey'>{t('email_ver_2')}</Typography>
                     <Typography className={classes.emailVerContent} variant='body1' color='grey'>{t('email_ver_3')}</Typography>
                     <Button style={{ marginTop: '15px' }} variant='contained' color='primary' onClick={handleEmailVer} >{t('got_it')}</Button>
                 </Container>
             </Dialog>
-        </Container>
+        </Container >
     );
 }
 

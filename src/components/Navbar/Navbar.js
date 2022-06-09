@@ -233,7 +233,7 @@ const Navbar = () => {
                                 </Tooltip>
                             </>
                         ) : (
-                            <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+                            <Button component={Link} to="/auth" variant="contained" color="primary">{t('sign_in')}</Button>
                         )}
                         {/* showUserSettings */}
                         <Menu

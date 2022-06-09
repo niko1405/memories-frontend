@@ -80,6 +80,7 @@
     "forgot_password": "Forgot password?",
     "email": "Email Address",
     "repeat_password": "Repeat Password",
+    "email_ver": "Email Verification",
     "email_ver_1": "A link with your account confirmation has been sent to your email:",
     "email_ver_2": "Check your email to verify your account.",
     "email_ver_3": "You can close this tab now.",
@@ -136,5 +137,7 @@
     "enable": "Enable",
     "change_language": "Change language",
     "recent_chats": "Recent chats",
-    "google_sign_in": "Google Sign In"
+    "google_sign_in": "Google Sign In",
+    "send_email": "Send Email",
+    "send_email_text": "Enter your email address so that we can send you once again an email with a verification link."
 }
