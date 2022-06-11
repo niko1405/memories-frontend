@@ -36,7 +36,7 @@ const Post = ({ post, deleteIcon = true, showIcons = true, showEdit = true }) =>
     const theme = createTheme();
     const userId = (user?.result?.googleId || user?.result?._id);
     const hasLiked = post.likes.find((like) => like === userId);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const { darkMode } = useSelector(state => state.settings);
     const { savedPosts } = useSelector(state => state.posts);
@@ -67,12 +67,12 @@ const Post = ({ post, deleteIcon = true, showIcons = true, showEdit = true }) =>
     }
 
     const handleLike = () => {
-        dispatch(likePost(post._id));
-
         if (hasLiked) {
             setLikes(post.likes.filter((id) => id !== userId));
+            dispatch(likePost(post._id, user.result._id, user.result.userName, i18n.getFixedT, true));
         } else {
             setLikes([...post.likes, userId]);
+            dispatch(likePost(post._id, user.result._id, user.result.userName, i18n.getFixedT, false));
         }
     }
 

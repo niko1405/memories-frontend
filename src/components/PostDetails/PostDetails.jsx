@@ -34,7 +34,7 @@ const PostDetails = () => {
     const { id } = useParams();
     const { t } = useTranslation();
 
-    const { post, posts, isLoading, error } = useSelector(state => state.posts);
+    const { post, isLoading, error } = useSelector(state => state.posts);
     const { profileUser } = useSelector(state => state.profile);
     const currentUser = useSelector(state => state.auth.user);
 

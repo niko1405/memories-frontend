@@ -58,7 +58,7 @@ export const createPost = (formData, setRemark, clear, t) => async (dispatch) =>
         //send push notification to followers when specific notifications enabled
         data.followersSettings.forEach(followerSettings => {
             if (followerSettings.notifications.enable && followerSettings.notifications.posts_comments)
-                sendPushNotification(followerSettings._id, t('post_notification_title'), t('post_notification_message', { user: data.post.name }), data.profileImg || 'default')
+                sendPushNotification(followerSettings._id, t(followerSettings.language)('post_notification_title'), t(followerSettings.language)('post_notification_message', { user: data.post.name }), data.profileImg || 'default')
         });
     }).catch((err) => {
         setRemark({ type: 'error', message: err.response.data.message });
@@ -92,7 +92,7 @@ export const commentPost = (value, id, userId, t) => async (dispatch) => {
         if (userId !== data.updatedPost.creator) {
             //send push notification to post creator when specific notifications enabled
             if (data.creatorSettings.notifications.enable && data.creatorSettings.notifications.posts_comments)
-                sendPushNotification(data.creatorSettings._id, t('post_comment_notification_title', { user: value.split(':')[0] }), `${t('message')}: ${value.split(':')[1]}`, data.creatorProfileImg);
+                sendPushNotification(data.creatorSettings._id, t(data.creatorSettings.language)('post_comment_notification_title', { user: value.split(':')[0] }), `${t(data.creatorSettings.language)('message')}: ${value.split(':')[1]}`, data.creatorProfileImg);
         }
     } catch (error) {
         console.log(error);
@@ -109,11 +109,17 @@ export const deletePost = (id) => async (dispatch) => {
     }
 }
 
-export const likePost = (id) => async (dispatch) => {
+export const likePost = (id, userId, userName, t, dislike) => async (dispatch) => {
     try {
         const { data } = await api.likePost(id);
 
         dispatch({ type: UPDATE, payload: data });
+
+        if (userId !== data.updatedPost.creator && !dislike) {
+            //send push notification to post creator when specific notifications enabled
+            if (data.creatorSettings.notifications.enable && data.creatorSettings.notifications.posts_comments)
+                sendPushNotification(data.creatorSettings._id, t(data.creatorSettings.language)('like_notification_title', { user: userName }), t(data.creatorSettings.language)('like_notification_message', { user: userName, post: data.updatedPost.title }), data.creatorProfileImg);
+        }
     } catch (error) {
         console.log(error);
     }

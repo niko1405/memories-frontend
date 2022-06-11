@@ -1,6 +1,7 @@
-import { AppBar, Avatar, Button, ListItemIcon, Divider, ListItemText, createTheme, ThemeProvider, Container, MenuItem, Tooltip, Menu, useMediaQuery, TextField, InputBase, IconButton, Paper } from "@material-ui/core";
+import { AppBar, Avatar, Button, ListItemIcon, Divider, ListItemText, createTheme, ThemeProvider, Container, MenuItem, Tooltip, Menu, useMediaQuery, TextField, InputBase, IconButton, Paper, FormControl, InputLabel, Select } from "@material-ui/core";
 import { Autocomplete, CircularProgress, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import Language from '@mui/icons-material/Language';
 import ProfileIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SavedPostsIcon from '@mui/icons-material/Bookmark';
@@ -45,12 +46,14 @@ const Navbar = () => {
     const location = useLocation();
     const theme = createTheme();
     const smDivise = useMediaQuery(theme.breakpoints.down('sm'));
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [search, setSearch] = useState('');
     const [userSettings, setUserSettings] = useState(emptyUserSettings);
+    const [logoutSettings, setLogoutSettings] = useState(emptyUserSettings);
     const [loading, setLoading] = useState(false);
     const [showMessages, setShowMessages] = useState(false);
+    const [language, setLanguage] = useState(i18n.language);
 
     const userData = useSelector(state => state.auth.user);
     const { darkMode } = useSelector(state => state.settings);
@@ -117,7 +120,7 @@ const Navbar = () => {
 
         setUser(JSON.parse(localStorage.getItem('profile')));
 
-        if(!location.pathname.includes('messages')) setShowMessages(false);
+        if (!location.pathname.includes('messages')) setShowMessages(false);
         else setShowMessages(true);
     }, [location]);
 
@@ -153,9 +156,10 @@ const Navbar = () => {
                                 disablePortal
                                 freeSolo
                                 getOptionLabel={(searchResults) => {
-                                    if(typeof searchResults === 'string') return searchResults;
+                                    if (typeof searchResults === 'string') return searchResults;
                                     return `${searchResults.title ? `${searchResults.title} ${searchResults.name} ${searchResults.tags.map((tag) => `#${tag} `)}`
-                                     : `${searchResults.userName} ${searchResults.description}`}`}
+                                        : `${searchResults.userName} ${searchResults.description}`}`
+                                }
                                 }
                                 options={searchResults}
                                 sx={{ width: 300 }}
@@ -233,7 +237,18 @@ const Navbar = () => {
                                 </Tooltip>
                             </>
                         ) : (
-                            <Button component={Link} to="/auth" variant="contained" color="primary">{t('sign_in')}</Button>
+                            <>
+                                <IconButton onClick={(e) => setLogoutSettings({ show: !logoutSettings.show, anchorEl: e.currentTarget })}>
+                                    <Tooltip title={t('settings')}>
+                                        <SettingsIcon htmlColor={darkMode ? 'white' : 'none'}
+                                            aria-controls={logoutSettings.show ? 'logout-settings-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={logoutSettings.show ? 'true' : undefined}
+                                        />
+                                    </Tooltip>
+                                </IconButton>
+                                <Button component={Link} to="/auth" variant="contained" color="primary">{t('sign_in')}</Button>
+                            </>
                         )}
                         {/* showUserSettings */}
                         <Menu
@@ -273,6 +288,42 @@ const Navbar = () => {
                                     <LogoutIcon fontSize="small" />
                                 </ListItemIcon>
                                 <ListItemText>{t('logout')}</ListItemText>
+                            </MenuItem>
+                        </Menu>
+                        {/* showUserSettings */}
+                        <Menu
+                            id="logout-settings-menu"
+                            anchorEl={logoutSettings.anchorEl}
+                            open={logoutSettings.show}
+                            onClose={() => setLogoutSettings({ show: false, anchorEl: null })}
+                            transformOrigin={{ horizontal: 'center', vertical: 'top' }}
+                            PaperProps={{
+                                style: {
+                                    width: 250,
+                                    transform: 'translateY(55px)'
+                                }
+                            }}
+                        >
+                            <MenuItem onClick={() => setLogoutSettings({ show: false, anchorEl: null })}>
+                                <ListItemIcon>
+                                    <Language fontSize="small" />
+                                </ListItemIcon>
+                                <FormControl fullWidth>
+                                    <InputLabel>{t('language')}</InputLabel>
+                                    <Select
+                                        value={language}
+                                        label={t('language')}
+                                        variant="standard"
+                                        onChange={(e) => {
+                                            setLanguage(e.target.value);
+                                            i18n.changeLanguage(e.target.value);
+                                        }}
+                                        style={{ color: 'black', backgroundColor: 'white' }}
+                                    >
+                                        <MenuItem value='en'>English</MenuItem>
+                                        <MenuItem value='de'>German</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </MenuItem>
                         </Menu>
                     </Container>

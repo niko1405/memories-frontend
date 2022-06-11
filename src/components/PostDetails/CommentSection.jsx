@@ -29,7 +29,7 @@ const CommentSection = ({ post }) => {
     const classes = useStyles();
     const theme = createTheme();
     const smDivise = useMediaQuery(theme.breakpoints.down('sm'));
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const { savedPosts, isLoading } = useSelector(state => state.posts);
     const { darkMode } = useSelector(state => state.settings);
@@ -59,7 +59,7 @@ const CommentSection = ({ post }) => {
 
         commentsRef.current.scrollIntoView({ behavior: 'smooth' });
 
-        dispatch(commentPost(newComment, post._id, user.result._id, t));
+        dispatch(commentPost(newComment, post._id, user.result._id, i18n.getFixedT));
     }
 
     const goToUser = async (userName) => {
@@ -67,12 +67,12 @@ const CommentSection = ({ post }) => {
     }
 
     const handleLike = () => {
-        dispatch(likePost(post._id));
-
         if (likingPost) {
             setLikes(post.likes.filter((id) => id !== user.result._id));
+            dispatch(likePost(post._id, user.result._id, user.result.userName, i18n.getFixedT, true));
         } else {
             setLikes([...post.likes, user.result._id]);
+            dispatch(likePost(post._id, user.result._id, user.result.userName, i18n.getFixedT, false));
         }
     }
 

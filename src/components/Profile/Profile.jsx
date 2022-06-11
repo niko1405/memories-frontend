@@ -28,7 +28,7 @@ const Profile = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [editProfile, setEditProfile] = useState(false);
     const [fullTextField, setFullTextField] = useState(false);
@@ -79,19 +79,15 @@ const Profile = () => {
     }
 
     const handleSubmit = () => {
-        const formData = new FormData();
-        formData.append('profileImage', profileData.selectedImage);
-        formData.append('description', profileData.description);
-        formData.append('links', profileData.links);
-
-        dispatch(updateOwnProfile(profileUser._id, formData, setLoading, setEditProfile));
+        if(loading) return;
+        dispatch(updateOwnProfile(profileUser._id, profileData, setLoading, setEditProfile));
     }
 
     const handleFollow = () => {
         if (!user) return;
 
         if (!following) {
-            dispatch(follow(profileUser, currentUser, profileUser, user, setLoading, '', t));
+            dispatch(follow(profileUser, currentUser, profileUser, user, setLoading, '', i18n.getFixedT));
         } else {
             dispatch(unfollow(profileUser, currentUser, profileUser, user, setLoading));
         }
@@ -104,22 +100,24 @@ const Profile = () => {
         fileReader.onload = () => {
             if (fileReader.readyState === 2) {
                 setImage(fileReader.result);
+                setProfileData({ ...profileData, selectedImage: fileReader.result });
             }
         }
         fileReader.readAsDataURL(file);
-
-        setProfileData({ ...profileData, selectedImage: file });
     }
 
     const showFollowerList = () => {
+        if(loading) return;
         setFollowList({ type: 'follower' });
     }
 
     const showFollowsList = () => {
+        if(loading) return;
         setFollowList({ type: 'following' });
     }
 
     const handleEdit = () => {
+        if(loading) return;
         if (editProfile) { setProfileData({ description: profileUser?.description, links: profileUser?.links, selectedImage: profileUser?.imageUrl }); setImage(profileUser?.imageUrl); }
         setEditProfile(!editProfile);
     }
@@ -187,7 +185,7 @@ const Profile = () => {
                                     classes: {
                                         notchedOutline: !editProfile && classes.noEditProfile
                                     }
-                                }} variant='outlined' type="text" fullWidth maxRows={4} multiline value={profileData.description} onChange={(e) => handleChange(e, 250)} error={fullTextField} helperText={fullTextField ? 'Max numb. of chars: 250' : ''}
+                                }} variant='outlined' type="text" fullWidth maxRows={10} multiline value={profileData.description} onChange={(e) => handleChange(e, 250)} error={fullTextField} helperText={fullTextField ? 'Max numb. of chars: 250' : ''}
                             />
                         </div>
                         <div style={{ display: 'flex' }}>
@@ -224,11 +222,11 @@ const Profile = () => {
                         </>
                     ) : (
                         <Container style={{ display: 'flex', padding: 0 }} >
-                            <Button variant={!editProfile ? 'contained' : 'outlined'} disabled={loading} color="primary" onClick={handleEdit} style={{ marginRight: theme.spacing(1) }} >
+                            <Button variant={!editProfile ? 'contained' : 'outlined'} color="primary" onClick={handleEdit} style={{ marginRight: theme.spacing(1) }} >
                                 <EditIcon />&nbsp;{t('edit_profile')}
                             </Button>
                             {editProfile && (
-                                <Button disabled={profileData.description.length === 0 || profileData.links.length === 0 || loading} variant='contained' type='submit' color='primary' onClick={handleSubmit} >
+                                <Button disabled={profileData.description.length === 0 || profileData.links.length === 0} variant='contained' type='submit' color='primary' onClick={handleSubmit} >
                                     {loading ? <CircularProgress /> : t('submit')}
                                 </Button>
                             )}

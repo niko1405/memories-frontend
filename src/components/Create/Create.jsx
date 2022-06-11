@@ -35,7 +35,7 @@ const Form = () => {
     const navigate = useNavigate();
     const theme = createTheme();
     const { id: postId } = useParams();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const imageNotFound = 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png';
 
@@ -82,18 +82,15 @@ const Form = () => {
             else return setRemark({ type: 'url', message: t('invalid_url') });
         }
 
-        const formData = new FormData();
-        if (postData.selectedFile) formData.append('postImage', postData.selectedFile);
-        else if (postData.url) formData.append('url', postData.url);
-        formData.append('title', postData.title);
-        formData.append('message', postData.message);
-        formData.append('tags', postData.tags);
-        formData.append('name', user?.result?.userName);
+        const formData = {
+            ...postData,
+            name: user.result?.userName
+        }
 
         if (post)
             dispatch(updatePost(postId, formData, setRemark, clear));
         else
-            dispatch(createPost(formData, setRemark, clear, t));
+            dispatch(createPost(formData, setRemark, clear, i18n.getFixedT));
     }
 
     const clear = () => {
@@ -113,12 +110,14 @@ const Form = () => {
         const fileReader = new FileReader();
 
         fileReader.onload = () => {
-            if (fileReader.readyState === 2)
+            if (fileReader.readyState === 2){
                 setImage(fileReader.result);
+                setPostData({ ...postData, selectedFile: fileReader.result, url: '' });
+            }
         }
         fileReader.readAsDataURL(file);
 
-        setPostData({ ...postData, selectedFile: file, url: '' });
+        // setPostData({ ...postData, selectedFile: file, url: '' });
         setRemark(emptyRemark);
     }
 

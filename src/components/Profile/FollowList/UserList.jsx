@@ -12,7 +12,7 @@ const UserList = ({ profileUser, theme, type, userList }) => {
     const currUser = JSON.parse(localStorage.getItem('profile'));
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     
     const { isLoading } = useSelector(state => state.posts);
     const { currentUser, users, currentSection } = useSelector(state => state.profile);
@@ -46,7 +46,7 @@ const UserList = ({ profileUser, theme, type, userList }) => {
         const isFollowing = currentUser.follows.includes(user._id)
 
         if (!isFollowing)
-            dispatch(follow(user, currentUser, profileUser, currUser, setLoading, type, t));
+            dispatch(follow(user, currentUser, profileUser, currUser, setLoading, type, i18n.getFixedT));
         else
             dispatch(unfollow(user, currentUser, profileUser, currUser, setLoading, type));
     }

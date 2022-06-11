@@ -53,8 +53,8 @@ export const follow = (userToFollow, userWhoFollows, profileUser, currentUser, s
         dispatch({ type: HANDLE_FOLLOWING, data: { currentUser, updatedCurrentUser, updatedProfileUser } });
 
         //send push notification to userToFollow when specific notifications enabled
-        if (data.userToFollowNotifications.enable && data.userToFollowNotifications.following_followers)
-            sendPushNotification(userToFollow._id, t('follower_notification_title'), t('follower_notification_message', { user: userWhoFollows.userName }), userWhoFollows.imageUrl);
+        if (data.userToFollowSettings.notifications.enable && data.userToFollowSettings.notifications.following_followers)
+            sendPushNotification(userToFollow._id, t(data.userToFollowSettings.language)('follower_notification_title'), t(data.userToFollowSettings.language)('follower_notification_message', { user: userWhoFollows.userName }), userWhoFollows.imageUrl);
 
         setLoading(false);
     }).catch(err => console.log(err));
@@ -193,6 +193,6 @@ export const sendDirectMessage = (id, chatId, message, t) => async (dispatch) =>
 
          //send push notification to receiver when specific notifications enabled
          if (data.receiverSettings.notifications.enable && data.receiverSettings.notifications.directMessages)
-            sendPushNotification(chatId, t('direct_message_notification_title', { user: message[0] }), `${t('message')}: ${message[1]}`, data.chatProfile.imageUrl);
+            sendPushNotification(chatId, t(data.receiverSettings.language)('direct_message_notification_title', { user: message[0] }), `${t(data.receiverSettings.language)('message')}: ${message[1]}`, data.chatProfile.imageUrl);
     }).catch(err => console.log(err));
 }

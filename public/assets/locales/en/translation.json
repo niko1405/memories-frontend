@@ -139,5 +139,7 @@
     "recent_chats": "Recent chats",
     "google_sign_in": "Google Sign In",
     "send_email": "Send Email",
-    "send_email_text": "Enter your email address so that we can send you once again an email with a verification link."
+    "send_email_text": "Enter your email address so that we can send you once again an email with a verification link.",
+    "like_notification_title": "{{user}} liked a post from you!",
+    "like_notification_message": "{{user}} liked your post '{{post}}'."
 }

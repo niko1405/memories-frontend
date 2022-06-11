@@ -18,6 +18,8 @@ import { getUser } from '../../actions/auth';
 import useStyles from './styles';
 import { HANDLE_DOWNBAR_SHOW } from '../../constants/actionTypes';
 
+import { isMobile } from "react-device-detect";
+
 const locations = ['home', 'search', 'create', 'profile'];
 
 const DownBar = () => {
@@ -55,8 +57,8 @@ const DownBar = () => {
 
             setSelected(pathName.split('/')[1]);
         }
-
-        if(pathName.includes('messages') || pathName.includes('savedPosts') || pathName.includes('posts/')) {
+        
+        if(pathName.includes('messages') || pathName.includes('savedPosts') || (pathName.includes('posts/') && isMobile)) {
             setSelected('');
             setShow(false);
         }

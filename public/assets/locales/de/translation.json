@@ -77,7 +77,7 @@
     "user_name": "Benutzername",
     "no_account": "Du hast keinen Account? Registriere dich!",
     "already_account": "Du hast schon einen Account? Melde dich an!",
-    "forgot_password": "Passwordt vergessen?",
+    "forgot_password": "Passwort vergessen?",
     "email": "Email Addresse",
     "repeat_password": "Passwort wiederholen",
     "email_ver": "Email Verifizierung",
@@ -139,5 +139,7 @@
     "recent_chats": "Neuliche Chats",
     "google_sign_in": "Mit Google anmelden",
     "send_email": "Email senden",
-    "send_email_text": "Gebe deine Email-Adresse an, damit wir dir erneut eine Email mit dem Verifizierungslink senden können."
+    "send_email_text": "Gebe deine Email-Adresse an, damit wir dir erneut eine Email mit dem Verifizierungslink senden können.",
+    "like_notification_title": "{{user}} hat einen Post von dir geliked!",
+    "like_notification_message": "{{user}} hat deinen Post '{{post}}' geliked."
 }

@@ -25,7 +25,7 @@ const Messages = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const { id } = useParams();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const { isLoading } = useSelector(state => state.posts);
     const { darkMode } = useSelector(state => state.settings);
@@ -67,7 +67,7 @@ const Messages = () => {
 
         setMessages([...messages, newComment]);
 
-        dispatch(sendDirectMessage(user.result._id, chat.chatProfile._id, newComment, t));
+        dispatch(sendDirectMessage(user.result._id, chat.chatProfile._id, newComment, i18n.getFixedT));
 
         document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
     }
