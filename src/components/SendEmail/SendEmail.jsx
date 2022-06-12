@@ -19,7 +19,7 @@ const SendEmail = () => {
     const theme = createTheme();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [email, setEmail] = useState('');
     const [remark, setRemark] = useState(emptyRemark);
@@ -29,7 +29,7 @@ const SendEmail = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(sendEmail(email, setRemark));
+        dispatch(sendEmail(email, setRemark, i18n.language || 'en'));
     }
 
     const handleChange = (e) => {

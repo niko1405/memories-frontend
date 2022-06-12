@@ -1,8 +1,8 @@
 import { ThemeProvider, createTheme, Paper, Container, Button, Grid, TextField, CircularProgress, Tooltip, IconButton } from "@material-ui/core";
 import { Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { changePassword } from "../../actions/auth";
 import { isValid } from "../../passwordChecker";
 
@@ -27,7 +27,8 @@ const ChangePassword = ({ userId = undefined, onClose = undefined }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const location = useLocation();
+    const { t, i18n } = useTranslation();
 
     let theme = createTheme();
 
@@ -41,6 +42,11 @@ const ChangePassword = ({ userId = undefined, onClose = undefined }) => {
     const params = useParams();
 
     const id = params.id || userId;
+    const language = new URLSearchParams(location.search).get('language') || 'en';
+
+    useEffect(() => {
+        i18n.changeLanguage(language);
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -118,7 +124,7 @@ const ChangePassword = ({ userId = undefined, onClose = undefined }) => {
                                     <>
                                         {!onClose ? (
                                             <Button variant='contained' color='primary' onClick={() => navigate('/auth')}>
-                                                Login
+                                                {t('login')}
                                             </Button>
                                         ) : ''}
                                     </>

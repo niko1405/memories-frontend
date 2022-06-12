@@ -42,7 +42,7 @@ const Auth = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [emailVer, setEmailVer] = useState(false);
 
@@ -59,7 +59,7 @@ const Auth = () => {
         if (isSignUp) {
             if (isValid(formData.password, 6, 20, 2, 1, 1, 1)) {
                 if (isEqual(formData.password, formData.confirmPassword))
-                    dispatch(signup(formData, setError, setEmailVer));
+                    dispatch(signup(formData, setError, setEmailVer, i18n.language ||'en'));
                 else
                     setError({ ...noErrors, confirmPassword: t('password_not_match') });
             } else

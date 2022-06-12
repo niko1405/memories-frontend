@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { activateUser } from "../../../actions/auth";
 
 import useStyles from './styles';
@@ -13,17 +13,20 @@ const EmailSent = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const location = useLocation();
+    const { t, i18n } = useTranslation();
 
     let theme = createTheme();
 
     const [error, setError] = useState('');
 
     const { id } = useParams();
+    const language = new URLSearchParams(location.search).get('language') || 'en';
 
     const { isLoading } = useSelector(state => state.auth);
 
     useEffect(() => {
+        i18n.changeLanguage(language);
         dispatch(activateUser(id, setError));
     }, []);
 

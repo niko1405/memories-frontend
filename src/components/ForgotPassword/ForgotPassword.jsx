@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     let theme = createTheme();
 
@@ -36,7 +36,7 @@ const ForgotPassword = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(forgotPassword(email, setRemark));
+        dispatch(forgotPassword(email, setRemark, i18n.language || 'en'));
     }
 
     return (

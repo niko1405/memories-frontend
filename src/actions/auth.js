@@ -30,10 +30,10 @@ export const signin = (formData, navigate, setError) => async (dispatch) => {
     });
 }
 
-export const signup = (formData, setError, setEmailVer) => async (dispatch) => {
+export const signup = (formData, setError, setEmailVer, language) => async (dispatch) => {
     dispatch({ type: AUTH_LOADING });
 
-    api.signUp(formData).then(({ data }) => {
+    api.signUp(formData, language).then(({ data }) => {
         dispatch({ type: AUTH_UNLOADING });
 
         setEmailVer(true);
@@ -78,17 +78,17 @@ export const googleSignIn = (googleData, navigate, setError) => async (dispatch)
 }
 
 export const getUser = query => async (dispatch) => {
-        await api.getUser(query).then(({ data }) => {
-            dispatch({ type: GET_USER, data });
-    
-            dispatch({ type: LOAD_CURRENT_USER, data });
-        }).catch(err => console.log(err));
+    await api.getUser(query).then(({ data }) => {
+        dispatch({ type: GET_USER, data });
+
+        dispatch({ type: LOAD_CURRENT_USER, data });
+    }).catch(err => console.log(err));
 }
 
-export const forgotPassword = (email, setRemark) => async (dispatch) => {
+export const forgotPassword = (email, setRemark, language) => async (dispatch) => {
     dispatch({ type: AUTH_LOADING });
 
-    api.forgotPassword(email).then(({ data }) => {
+    api.forgotPassword(email, language).then(({ data }) => {
         dispatch({ type: AUTH_UNLOADING });
 
         setRemark({ message: data.message, error: false });
@@ -135,7 +135,7 @@ export const changeUsername = (id, userName, setRemark, storageUser) => async (d
         api.refreshPosts(storageUser.result.userName, userName);
 
         storageUser.result.userName = userName;
-        
+
         dispatch({ type: UPDATE_LOCALSTORAGE, payload: { ...storageUser } });
     }).catch(err => {
         setRemark({ status: 'error', message: err.response.data.message });
@@ -144,10 +144,10 @@ export const changeUsername = (id, userName, setRemark, storageUser) => async (d
     dispatch({ type: AUTH_UNLOADING });
 }
 
-export const sendEmail = (email, setRemark) => async (dispatch) => {
+export const sendEmail = (email, setRemark, language) => async (dispatch) => {
     dispatch({ type: AUTH_LOADING });
 
-    await api.sendEmail(email).then(({ data }) => {
+    await api.sendEmail(email, language).then(({ data }) => {
         setRemark({ type: 'successfull', message: data.message });
     }).catch(err => {
         setRemark({ type: 'error', message: err.response.data.message });

@@ -53,7 +53,7 @@ const Navbar = () => {
     const [logoutSettings, setLogoutSettings] = useState(emptyUserSettings);
     const [loading, setLoading] = useState(false);
     const [showMessages, setShowMessages] = useState(false);
-    const [language, setLanguage] = useState(i18n.language);
+    const [language, setLanguage] = useState(i18n.language || 'en');
 
     const userData = useSelector(state => state.auth.user);
     const { darkMode } = useSelector(state => state.settings);
@@ -147,10 +147,12 @@ const Navbar = () => {
             <Container maxWidth="xl" style={{ width: '100%', padding: 0, display: 'flex', zIndex: 100, position: 'sticky', top: 0, marginBottom: theme.spacing(1) }} >
                 <AppBar style={{ borderBottom: darkMode ? '1px solid gray' : '1px solid lightgray', backgroundColor: darkMode && 'black' }} position="static" color="inherit" elevation={0}>
                     <Container maxWidth='lg' className={classes.contentContainer} >
-                        <Link to="/" className={classes.brandContainer}>
-                            <img src={darkMode ? memoriesTextWhite : memoriesText} alt="icon" height={theme.spacing(3)} />
-                            <img className={classes.image} src={memoriesLogo} alt="icon" height={theme.spacing(4)} />
-                        </Link>
+                        <Container style={{ padding: 0 }}>
+                            <Link to="/" className={classes.brandContainer}>
+                                <img src={darkMode ? memoriesTextWhite : memoriesText} alt="icon" height={theme.spacing(3)} />
+                                <img className={classes.image} src={memoriesLogo} alt="icon" height={theme.spacing(4)} />
+                            </Link>
+                        </Container>
                         {!smDivise && !location.pathname.includes('search') && !location.pathname.includes('messages') && (
                             <Autocomplete
                                 disablePortal
@@ -165,7 +167,7 @@ const Navbar = () => {
                                 sx={{ width: 300 }}
                                 noOptionsText={t('no_results')}
                                 renderOption={(props, searchResults) => (
-                                    <>
+                                    <Container key={searchResults._id} style={{ padding: 0 }}>
                                         {searchResults.title ? (
                                             <Container onClick={() => handlePostClick(searchResults._id)} style={{ zIndex: 100, padding: theme.spacing(1), cursor: 'pointer', display: 'flex', alignItems: 'center', borderBottom: '1px solid lightgray' }}>
                                                 <img alt={searchResults.title} src={searchResults.selectedFile} style={{ maxWidth: 60, maxHeight: 60 }} />
@@ -183,10 +185,10 @@ const Navbar = () => {
                                                 </Container>
                                             </Container>
                                         )}
-                                    </>
+                                    </Container>
                                 )}
                                 renderInput={(params) => (
-                                    <Paper onClick={(e) => { }} style={{ width: '300px', display: 'flex', alignItems: 'center', backgroundColor: '#ebebeb', position: 'relative' }} elevation={0} >
+                                    <Paper style={{ width: '300px', display: 'flex', alignItems: 'center', backgroundColor: '#ebebeb', position: 'relative' }} elevation={0} >
                                         <IconButton style={{ cursor: 'default' }} >
                                             <SearchIcon />
                                         </IconButton>
@@ -237,7 +239,7 @@ const Navbar = () => {
                                 </Tooltip>
                             </>
                         ) : (
-                            <>
+                            <Container style={{ padding: 0, display: 'flex', justifyContent: 'flex-end' }}>
                                 <IconButton onClick={(e) => setLogoutSettings({ show: !logoutSettings.show, anchorEl: e.currentTarget })}>
                                     <Tooltip title={t('settings')}>
                                         <SettingsIcon htmlColor={darkMode ? 'white' : 'none'}
@@ -248,7 +250,7 @@ const Navbar = () => {
                                     </Tooltip>
                                 </IconButton>
                                 <Button component={Link} to="/auth" variant="contained" color="primary">{t('sign_in')}</Button>
-                            </>
+                            </Container>
                         )}
                         {/* showUserSettings */}
                         <Menu
@@ -304,7 +306,7 @@ const Navbar = () => {
                                 }
                             }}
                         >
-                            <MenuItem onClick={() => setLogoutSettings({ show: false, anchorEl: null })}>
+                            <MenuItem >
                                 <ListItemIcon>
                                     <Language fontSize="small" />
                                 </ListItemIcon>
@@ -318,7 +320,7 @@ const Navbar = () => {
                                             setLanguage(e.target.value);
                                             i18n.changeLanguage(e.target.value);
                                         }}
-                                        style={{ color: 'black', backgroundColor: 'white' }}
+                                    // style={{ color: 'black', backgroundColor: 'white' }}
                                     >
                                         <MenuItem value='en'>English</MenuItem>
                                         <MenuItem value='de'>German</MenuItem>

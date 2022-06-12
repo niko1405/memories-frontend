@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: /*'https://memories-project-v1-0.herokuapp.com'*/'http://localhost:5000' });
+const API = axios.create({ baseURL: 'https://memories-project-v1-0.herokuapp.com'/*'http://localhost:5000'*/ });
 
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
@@ -25,15 +25,15 @@ export const getSavedPosts = (id) => API.get(`/posts/save/${id}`);
 export const removeSavedPost = (postId, userId) => API.patch(`/posts/save/remove/${postId}`, { userId });
 
 export const signIn = (formData) => API.post('/user/signin', formData);
-export const signUp = (formData) => API.post('/user/signup', formData);
+export const signUp = (formData, language) => API.post(`/user/signup?language=${language}`, formData);
 export const activateUser = (id) => API.get(`/user/activate/${id}`);
 export const googleSignIn = (googleData) => API.post('/user/googleSignIn', googleData);
 export const getUser = ({ id = '0', userName = '0' }) => API.get(`/user?id=${id}&userName=${userName}`);
-export const forgotPassword = (email) => API.post(`/user/forgotPw`, { email });
+export const forgotPassword = (email, language) => API.post(`/user/forgotPw?language=${language}`, { email });
 export const changePassword = (id, password) => API.post(`/user/changePw`, { id, password });
 export const deleteAccount = (id) => API.get(`/user/deleteAcc/${id}`);
 export const changeUsername = (id, userName) => API.post(`/user/changeUsername/${id}`, { userName });
-export const sendEmail = (email) => API.patch(`/user/sendEmail`, { email });
+export const sendEmail = (email, language) => API.patch(`/user/sendEmail?language=${language}`, { email });
 
 export const changeTheme = (id, darkMode) => API.patch(`/settings/theme/${id}`, { darkMode });
 export const changeLanguage = (id, language) => API.patch(`/settings/language/${id}`, { language });

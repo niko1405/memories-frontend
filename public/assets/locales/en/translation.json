@@ -58,8 +58,8 @@
     "no_suggested_chats": "No suggested chats currently",
     "no_recent_chats": "No recent chats currently",
     "you": "You",
-    "sign_in_create": "Please sign In to create a post",
-    "sign_in_profile": "Please sign In to see your profile",
+    "sign_in_create": "Please sign in to create a post",
+    "sign_in_profile": "Please sign in to see your profile",
     "search": "Search",
     "see_all": "See all",
     "add_post": "Add post",
@@ -141,5 +141,6 @@
     "send_email": "Send Email",
     "send_email_text": "Enter your email address so that we can send you once again an email with a verification link.",
     "like_notification_title": "{{user}} liked a post from you!",
-    "like_notification_message": "{{user}} liked your post '{{post}}'."
+    "like_notification_message": "{{user}} liked your post '{{post}}'.",
+    "login": "Login"
 }

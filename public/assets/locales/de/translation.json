@@ -141,5 +141,6 @@
     "send_email": "Email senden",
     "send_email_text": "Gebe deine Email-Adresse an, damit wir dir erneut eine Email mit dem Verifizierungslink senden können.",
     "like_notification_title": "{{user}} hat einen Post von dir geliked!",
-    "like_notification_message": "{{user}} hat deinen Post '{{post}}' geliked."
+    "like_notification_message": "{{user}} hat deinen Post '{{post}}' geliked.",
+    "login": "Anmelden"
 }
