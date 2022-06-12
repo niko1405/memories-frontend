@@ -149,7 +149,7 @@ const Search = () => {
                                     {t('internal_server_error')}
                                 </Typography>
                                 <Button style={{ marginTop: theme.spacing(1) }} variant='contained' color='primary' onClick={() => dispatch(getProfiles(section, setError))} >
-                                    {isLoading ? <CircularProgress color="warning" /> : 'Try Again'}
+                                    {isLoading ? <CircularProgress color="warning" /> : t('try_again')}
                                 </Button>
                             </Container>
                         ) : (

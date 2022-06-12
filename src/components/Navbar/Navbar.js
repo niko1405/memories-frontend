@@ -66,6 +66,10 @@ const Navbar = () => {
         if (user && !userData) dispatch(getUser({ id: user.result._id }));
     }, []);
 
+    useEffect(() => {
+        if (i18n.language) setLanguage(i18n.language);
+    }, [i18n.language]);
+
     const handleProfileClick = (e) => {
         setUserSettings({ show: !userSettings.show, anchorEl: e.currentTarget });
     }
@@ -147,11 +151,9 @@ const Navbar = () => {
             <Container maxWidth="xl" style={{ width: '100%', padding: 0, display: 'flex', zIndex: 100, position: 'sticky', top: 0, marginBottom: theme.spacing(1) }} >
                 <AppBar style={{ borderBottom: darkMode ? '1px solid gray' : '1px solid lightgray', backgroundColor: darkMode && 'black' }} position="static" color="inherit" elevation={0}>
                     <Container maxWidth='lg' className={classes.contentContainer} >
-                        <Container style={{ padding: 0 }}>
-                            <Link to="/" className={classes.brandContainer}>
-                                <img src={darkMode ? memoriesTextWhite : memoriesText} alt="icon" height={theme.spacing(3)} />
-                                <img className={classes.image} src={memoriesLogo} alt="icon" height={theme.spacing(4)} />
-                            </Link>
+                        <Container style={{ padding: 0, display: 'flex', alignItems: 'center' }} >
+                            <img src={darkMode ? memoriesTextWhite : memoriesText} alt="icon" height={theme.spacing(3)} style={{ cursor: 'pointer' }} onClick={() => navigate('/')} />
+                            <img className={classes.image} src={memoriesLogo} alt="icon" height={theme.spacing(4)} />
                         </Container>
                         {!smDivise && !location.pathname.includes('search') && !location.pathname.includes('messages') && (
                             <Autocomplete
@@ -214,7 +216,7 @@ const Navbar = () => {
                             />
                         )}
                         {user ? (
-                            <>
+                            <Container style={{ padding: 0, display: 'flex', justifyContent: 'flex-end' }}>
                                 <IconButton style={{ position: 'absolute', right: 60, zIndex: 100 }} onClick={handleClickMessages}>
                                     <Tooltip title={t('messages')}>
                                         {showMessages ? (
@@ -237,7 +239,7 @@ const Navbar = () => {
                                         {user?.result.name.charAt(0)}
                                     </Avatar>
                                 </Tooltip>
-                            </>
+                            </Container>
                         ) : (
                             <Container style={{ padding: 0, display: 'flex', justifyContent: 'flex-end' }}>
                                 <IconButton onClick={(e) => setLogoutSettings({ show: !logoutSettings.show, anchorEl: e.currentTarget })}>
