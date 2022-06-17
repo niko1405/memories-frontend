@@ -13,6 +13,10 @@ export const changeTheme = (id, darkMode) => async (dispatch) => {
     }).catch(err => console.log(err.response.data.message));
 }
 
+export const changeThemeSetting = (theme) => (dispatch) => {
+    dispatch({ type: CHANGE_THEME, payload: theme === 'dark' ? true : false });
+}
+
 export const getTheme = (id) => async (dispatch) => {
     await api.getTheme(id).then(({ data }) => {
         dispatch({ type: CHANGE_THEME, payload: data.darkMode });

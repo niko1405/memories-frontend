@@ -7,6 +7,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SavedPostsIcon from '@mui/icons-material/Bookmark';
 import LogoutIcon from '@mui/icons-material/ExitToAppOutlined';
 import MessageIcon from '@mui/icons-material/NearMe';
+import Theme from '@mui/icons-material/ColorLens';
 import MessageIconOutlined from '@mui/icons-material/NearMeOutlined';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import decode from 'jwt-decode';
@@ -24,6 +25,7 @@ import { LOGOUT } from "../../constants/actionTypes";
 import { getPostsBySearch } from "../../actions/posts";
 import { searchProfiles } from "../../actions/profile";
 import { useTranslation } from "react-i18next";
+import { changeThemeSetting } from "../../actions/settings";
 
 const mix = (...arrays) => {
     const transposed = arrays.reduce((result, row) => {
@@ -48,17 +50,18 @@ const Navbar = () => {
     const smDivise = useMediaQuery(theme.breakpoints.down('sm'));
     const { t, i18n } = useTranslation();
 
+    const userData = useSelector(state => state.auth.user);
+    const { darkMode } = useSelector(state => state.settings);
+    const { searchPosts } = useSelector(state => state.posts);
+    const { profiles } = useSelector(state => state.profile);
+
     const [search, setSearch] = useState('');
     const [userSettings, setUserSettings] = useState(emptyUserSettings);
     const [logoutSettings, setLogoutSettings] = useState(emptyUserSettings);
     const [loading, setLoading] = useState(false);
     const [showMessages, setShowMessages] = useState(false);
     const [language, setLanguage] = useState(i18n.language || 'en');
-
-    const userData = useSelector(state => state.auth.user);
-    const { darkMode } = useSelector(state => state.settings);
-    const { searchPosts } = useSelector(state => state.posts);
-    const { profiles } = useSelector(state => state.profile);
+    const [themeSetting, setThemeSetting] = useState(darkMode ? 'dark' : 'light');
 
     const searchResults = mix(profiles, searchPosts);
 
@@ -69,6 +72,10 @@ const Navbar = () => {
     useEffect(() => {
         if (i18n.language) setLanguage(i18n.language);
     }, [i18n.language]);
+
+    useEffect(() => {
+        setThemeSetting(darkMode ? 'dark' : 'light');
+    }, [darkMode]);
 
     const handleProfileClick = (e) => {
         setUserSettings({ show: !userSettings.show, anchorEl: e.currentTarget });
@@ -294,7 +301,7 @@ const Navbar = () => {
                                 <ListItemText>{t('logout')}</ListItemText>
                             </MenuItem>
                         </Menu>
-                        {/* showUserSettings */}
+                        {/* logout-Settings */}
                         <Menu
                             id="logout-settings-menu"
                             anchorEl={logoutSettings.anchorEl}
@@ -326,6 +333,26 @@ const Navbar = () => {
                                     >
                                         <MenuItem value='en'>English</MenuItem>
                                         <MenuItem value='de'>German</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </MenuItem>
+                            <MenuItem >
+                                <ListItemIcon>
+                                    <Theme fontSize="small" />
+                                </ListItemIcon>
+                                <FormControl fullWidth>
+                                    <InputLabel>{t('theme')}</InputLabel>
+                                    <Select
+                                        value={themeSetting}
+                                        label={t('theme')}
+                                        variant="standard"
+                                        onChange={(e) => {
+                                            setThemeSetting(e.target.value);
+                                            dispatch(changeThemeSetting(e.target.value));
+                                        }}
+                                    >
+                                        <MenuItem value='dark'>{t('dark')}</MenuItem>
+                                        <MenuItem value='light'>{t('light')}</MenuItem>
                                     </Select>
                                 </FormControl>
                             </MenuItem>
